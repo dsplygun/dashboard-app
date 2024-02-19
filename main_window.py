@@ -77,12 +77,6 @@ async def main():
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
 
-    weather_panel = ttk.Frame(right_panel,borderwidth=1,padding=1)
-    weather_panel.pack(side=tk.TOP)
-
-    weather_temperature = ttk.Label(weather_panel,text="15C")
-    weather_temperature.pack()
-
     main_panel = ttk.Frame(window,style='leftpanel.TFrame',padding=3)
     main_panel.pack(side=tk.LEFT)
 
