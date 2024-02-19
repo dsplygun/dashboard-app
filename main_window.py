@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import cp_zagruska
 
 logging_text : tk.Text = None
 window = tk.Tk()
@@ -70,7 +71,7 @@ async def main():
 
 
     s = ttk.Style()
-    s.configure('TFrame',background='green')
+    s.configure('TFrame',background='black')
     s.configure('rightpanel.TFrame',background='red')
     s.configure('leftpanel.TFrame',background='blue')
     
@@ -85,11 +86,20 @@ async def main():
     main_panel_text.pack()
     global logging_text
     logging_text = main_panel_text
+    
+    #########
+    cp_widget= cp_zagruska.CpWidget(right_panel)
+    cp_widget.pack()
+    
+    
+    
+   ######### 
 
     loop = asyncio.get_running_loop()
     msg_list = []
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(run_udp_server(msg_list))
+        task_cp=tg.create_task(cp_widget.run())
         task2 = tg.create_task(main_loop(window))
     #asyncio.ensure_future()
 
