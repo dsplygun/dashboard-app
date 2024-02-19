@@ -13,6 +13,7 @@ class BatteryWidget(ttk.Frame):
         
     async def run(self):
         try:
-            pass
+             ps.sensors_battery()
+        
         except:
             pass
