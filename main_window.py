@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import battery
 
 logging_text : tk.Text = None
 window = tk.Tk()
@@ -85,6 +86,9 @@ async def main():
     main_panel_text.pack()
     global logging_text
     logging_text = main_panel_text
+
+    battery_widget=battery.BatteryWidget(right_panel)
+    battery_widget.pack()
 
     loop = asyncio.get_running_loop()
     msg_list = []
