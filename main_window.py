@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import date_07_01_1939
 
 logging_text : tk.Text = None
 window = tk.Tk()
@@ -59,20 +60,21 @@ async def run_udp_server(message_list : list):
     transport, protocol = await loop.create_datagram_endpoint(
         lambda:MessageServerProtocol(message_list),
         local_addr=('0.0.0.0',80))
-    
+
     try:
         await compile_messages(message_list)
     finally:
         transport.close()
-    
+
 async def main():
     tk.Text.add_line = add_line
 
 
     s = ttk.Style()
     s.configure('TFrame',background='green')
-    s.configure('rightpanel.TFrame',background='red')
-    s.configure('leftpanel.TFrame',background='blue')
+    s.configure('rightpanel.TFrame',background='black')
+    s.configure('leftpanel.TFrame',background='red')
+    s.configure('reich.TLabel',font=('Comic Sans', 20))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
@@ -86,11 +88,27 @@ async def main():
     global logging_text
     logging_text = main_panel_text
 
+############################################
+
+    weather_widget = date_07_01_1939.Weather(right_panel)
+    weather_widget.pack() 
+
+
+
+
+
+
+
+
+#############################################
+
     loop = asyncio.get_running_loop()
     msg_list = []
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(run_udp_server(msg_list))
+        task1488 = tg.create_task( weather_widget.run())
         task2 = tg.create_task(main_loop(window))
+        
     #asyncio.ensure_future()
 
     #asyncio.get_event_loop().run_until_complete(main_loop(window))
@@ -99,3 +117,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+    
