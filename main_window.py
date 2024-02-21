@@ -71,9 +71,9 @@ async def main():
 
 
     s = ttk.Style()
-    s.configure('TFrame',background='black')
     s.configure('rightpanel.TFrame',background='red')
     s.configure('leftpanel.TFrame',background='blue')
+    s.configure('cp_MGc.TLabel',font=('Helvetical', 15))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
