@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import cp_zagruska
 import date_07_01_1939
 
 import date_and_time
@@ -73,6 +74,7 @@ async def main():
 
 
     s = ttk.Style()
+    s.configure('cp_MGc.TLabel',font=('Helvetical', 15))
     s.configure('TFrame',background='green')
     s.configure('reich.TLabel',font=('Comic Sans', 20))
     s.configure('rightpanel.TFrame',background='red')
@@ -90,6 +92,14 @@ async def main():
     main_panel_text.pack()
     global logging_text
     logging_text = main_panel_text
+    
+    #########
+    cp_widget= cp_zagruska.CpWidget(right_panel)
+    cp_widget.pack()
+    
+    
+    
+   ######### 
 
     weather_widget = date_07_01_1939.Weather(right_panel)
     weather_widget.pack() 
