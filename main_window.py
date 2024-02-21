@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import battery
 import cp_zagruska
 import date_07_01_1939
 
@@ -79,6 +80,7 @@ async def main():
     s.configure('reich.TLabel',font=('Comic Sans', 20))
     s.configure('rightpanel.TFrame',background='red')
     s.configure('leftpanel.TFrame',background='blue')
+    s.configure('Battery.TLabel',font=('Sylfaen',12))
     s.configure('datetime.TLabel',font=('Helvetica', 24))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
@@ -106,6 +108,9 @@ async def main():
 
     date_widget = date_and_time.DateTimeWidget(right_panel)
     date_widget.pack()
+
+    battery_widget=battery.BatteryWidget(right_panel)
+    battery_widget.pack()
 
     loop = asyncio.get_running_loop()
     msg_list = []
