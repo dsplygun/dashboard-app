@@ -6,6 +6,8 @@ from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
 import date_07_01_1939
 
+import date_and_time
+
 logging_text : tk.Text = None
 window = tk.Tk()
 window.title("Dashboard")
@@ -72,9 +74,10 @@ async def main():
 
     s = ttk.Style()
     s.configure('TFrame',background='green')
-    s.configure('rightpanel.TFrame',background='black')
-    s.configure('leftpanel.TFrame',background='red')
     s.configure('reich.TLabel',font=('Comic Sans', 20))
+    s.configure('rightpanel.TFrame',background='red')
+    s.configure('leftpanel.TFrame',background='blue')
+    s.configure('datetime.TLabel',font=('Helvetica', 24))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
@@ -88,25 +91,20 @@ async def main():
     global logging_text
     logging_text = main_panel_text
 
-############################################
-
     weather_widget = date_07_01_1939.Weather(right_panel)
     weather_widget.pack() 
 
-
-
-
-
-
-
-
-#############################################
+    date_widget = date_and_time.DateTimeWidget(right_panel)
+    date_widget.pack()
 
     loop = asyncio.get_running_loop()
     msg_list = []
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(run_udp_server(msg_list))
-        task1488 = tg.create_task( weather_widget.run())
+        for i in right_panel.children:
+            new_task = tg.create_task( right_panel.children[i].run() )
+        #task_time = tg.create_task( date_widget.run() )
+
         task2 = tg.create_task(main_loop(window))
         
     #asyncio.ensure_future()
