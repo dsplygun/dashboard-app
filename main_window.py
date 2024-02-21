@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import asyncio
 from async_tkinter_loop import async_handler, async_mainloop, main_loop
 import json
+import battery
 
 logging_text : tk.Text = None
 window = tk.Tk()
@@ -73,6 +74,7 @@ async def main():
     s.configure('TFrame',background='green')
     s.configure('rightpanel.TFrame',background='red')
     s.configure('leftpanel.TFrame',background='blue')
+    s.configure('Battery.TLabel',font=('Sylfaen',12))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
@@ -86,10 +88,14 @@ async def main():
     global logging_text
     logging_text = main_panel_text
 
+    battery_widget=battery.BatteryWidget(right_panel)
+    battery_widget.pack()
+
     loop = asyncio.get_running_loop()
     msg_list = []
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(run_udp_server(msg_list))
+        batteryy = tg.create_task(battery_widget.run())
         task2 = tg.create_task(main_loop(window))
     #asyncio.ensure_future()
 
