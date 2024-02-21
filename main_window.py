@@ -75,6 +75,7 @@ async def main():
     s.configure('TFrame',background='green')
     s.configure('rightpanel.TFrame',background='red')
     s.configure('leftpanel.TFrame',background='blue')
+    s.configure('datetime.TLabel',font=('Helvetica', 24))
     
     right_panel = ttk.Frame(window,borderwidth=2,padding=3,style='rightpanel.TFrame')
     right_panel.pack(side=tk.RIGHT)
@@ -97,7 +98,7 @@ async def main():
     msg_list = []
     async with asyncio.TaskGroup() as tg:
         task1 = tg.create_task(run_udp_server(msg_list))
-        
+
         for i in right_panel.children:
             new_task = tg.create_task( right_panel.children[i].run() )
         #task_time = tg.create_task( date_widget.run() )
